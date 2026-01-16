@@ -21,6 +21,7 @@ si <- read_xlsx(here("data", "01_raw", "Stable_Isotopes_Metadata.xlsx")) %>%
          verbatimDepth = depth,
          locality = region) %>%
   mutate(
+    date = as.Date(date),
     minimumDepthInMeters = verbatimDepth,
     maximumDepthInMeters = verbatimDepth,
     verbatimLatitude = round(verbatimLatitude, 5),
@@ -251,6 +252,7 @@ emof <- occ %>%
     values_to = "measurementValue"
   ) %>%
   mutate(
+    eventDate = as.Date(eventDate),
     measurementValue = case_when(
       verbatimMeasurementType %in% c("d13C", "d15N", "d34S") ~ round(measurementValue, 2),
       verbatimMeasurementType %in% c("height", "sizeAmbitus") ~ round(measurementValue, 0),
