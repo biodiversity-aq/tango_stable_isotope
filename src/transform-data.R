@@ -23,11 +23,14 @@ si <- read_xlsx(here("data", "01_raw", "Stable_Isotopes_Metadata.xlsx")) %>%
   mutate(
     minimumDepthInMeters = verbatimDepth,
     maximumDepthInMeters = verbatimDepth,
+    verbatimLatitude = round(verbatimLatitude, 5),
+    verbatimLongitude = round(verbatimLongitude, 5),
     decimalLatitude = round(verbatimLatitude, 4),
     decimalLongitude = round(verbatimLongitude, 4),
     sex = case_when(sex == "M" ~ "male", 
                     sex =="F" ~ "female", 
                     TRUE ~ ""),
+    occurrenceStatus = "detected",
     geodeticDatum = "EPSG:4326",
     basisOfRecord = "MaterialSample",
     materialEntityID = sampleID
@@ -67,11 +70,14 @@ si_tango1 <- si %>%
     coordinateUncertaintyInMeters.x,  
     verbatimLatitude,
     verbatimLongitude,
+    geodeticDatum,
     verbatimDepth,
     locality.x,
     higherGeographyID.x,
     
     # occurrence
+    basisOfRecord,
+    occurrenceStatus,
     scientificName,
     scientificNameID,
     scientificNameAuthorship,
@@ -189,11 +195,14 @@ si_tango2 <- ev[si_2, on = .(start_num <= sample_num, stop_num >= sample_num)] %
     decimalLongitude,
     verbatimLatitude,
     verbatimLongitude,
+    geodeticDatum,
     verbatimDepth,
     i.locality,
     higherGeographyId,
     
     # occurrence
+    basisOfRecord,
+    occurrenceStatus,
     scientificName,
     scientificNameID,
     scientificNameAuthorship,
@@ -265,7 +274,8 @@ emof <- occ %>%
     occurrenceID,
     verbatimMeasurementType,
     measurementType,
-    measurementValue
+    measurementValue,
+    measurementUnit
   ) 
 
 # write output
