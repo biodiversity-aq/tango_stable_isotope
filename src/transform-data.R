@@ -280,7 +280,7 @@ emof <- occ %>%
 
 # write output
 write_tsv(occ, here("data", "02_output", "occurrence.txt"), na = "")
-write_tsv(emof, here("data", "02_output", "emof.txt"), na = "")
+write_tsv(emof, here("data", "02_output", "mof.txt"), na = "")
 
 
 
